@@ -2,71 +2,163 @@ package no.hvl.dat100.jplab12.oppgave3;
 
 import no.hvl.dat100.jplab12.common.TODO;
 import no.hvl.dat100.jplab12.oppgave1.*;
+import no.hvl.dat100.jplab12.oppgave2.Bilde;
+import no.hvl.dat100.jplab12.oppgave2.Tekst;
 
 public class Blogg {
 
 	// TODO: objektvariable 
+	Innlegg[] innleggtabell;
+	int nesteledig;
 
 	public Blogg() {
-		throw new UnsupportedOperationException(TODO.constructor("Blogg"));
+		this.innleggtabell =  new Innlegg[20];
+		this.nesteledig = 0;
 	}
 
+	
 	public Blogg(int lengde) {
-		throw new UnsupportedOperationException(TODO.constructor("Blogg"));
+		this.innleggtabell =  new Innlegg[lengde];
+		this.nesteledig = 0;
 	}
 
+	
 	public int getAntall() {
-		throw new UnsupportedOperationException(TODO.method());
+		int antall = 0;
+		for (Innlegg i : innleggtabell) {
+			if (i != null) {
+				antall++;
+			}
+		}
+		return antall;
 	}
+	
 	
 	public Innlegg[] getSamling() {
-		throw new UnsupportedOperationException(TODO.method());
-
+		return innleggtabell;
 	}
+	
 	
 	public int finnInnlegg(Innlegg innlegg) {
-
-		throw new UnsupportedOperationException(TODO.method());
+		int index = -1;
+		for (Innlegg i : innleggtabell) {
+			if (innlegg.erLik(i)) {
+				index = i.getId();
+				break;
+			}
+		}
+		return index;
 	}
 
+	
 	public boolean finnes(Innlegg innlegg) {
-		throw new UnsupportedOperationException(TODO.method());
+		boolean finnes = false;
+		for (Innlegg i : innleggtabell) {
+			if (innlegg.erLik(i)) {
+				finnes = true;
+				break;
+			}
+		}
+		return finnes;
 	}
 
+	
 	public boolean ledigPlass() {
-		throw new UnsupportedOperationException(TODO.method());
-
+		boolean ledig = false;
+		for (Innlegg i : innleggtabell) {
+			if (i == null) {
+				ledig = true;
+				break;
+			}
+		}
+		return ledig;
 	}
+	
 	
 	public boolean leggTil(Innlegg innlegg) {
-
-		throw new UnsupportedOperationException(TODO.method());
+		boolean leggTil = false;
+		if (!ledigPlass() || finnes(innlegg)) {
+			return leggTil;
+		}
+		innleggtabell[nesteledig] = innlegg;
+		leggTil = true;
+		nesteledig++;
+//		for (Innlegg i : innleggtabell) {
+//			if (i == null) {
+//				i = innlegg;
+//				leggTil = true;
+//				break;
+//			}
+//		}
+		return leggTil;
 	}
 	
+	
 	public String toString() {
-		throw new UnsupportedOperationException(TODO.method());
+		//2\nTEKST\n1\nOle Olsen\n23-10-2019\n0\nen tekst\nBILDE\n2\nOline Olsen\n24-10-2019\n0\net bilde\nhttp://www.picture.com/oo.jpg\n
+		String utString = "" + innleggtabell.length + "\n";
+		for (Innlegg i : innleggtabell) {
+			utString += i.toString();
+		}
+		return utString;
 	}
 
 	// valgfrie oppgaver nedenfor
 	
+	
 	public void utvid() {
-		throw new UnsupportedOperationException(TODO.method());
+		Innlegg[] ny = new Innlegg[innleggtabell.length * 2];
+		for (int i = 0; i < innleggtabell.length; i++) {
+			ny[i] = innleggtabell[i];
+		}
+		innleggtabell = ny;
 	}
+	
 	
 	public boolean leggTilUtvid(Innlegg innlegg) {
-
-		throw new UnsupportedOperationException(TODO.method());
+		boolean lagtTil = leggTil(innlegg);
+		leggTil(innlegg);
 		
+		if (!lagtTil && !finnes(innlegg)) {
+			utvid();
+			leggTil(innlegg);
+		}
+		return lagtTil;
 	}
 	
-	public void slett(Innlegg innlegg) {
+	
+	public boolean slett(Innlegg innlegg) {
+		boolean slettet = false;
 		
-		throw new UnsupportedOperationException(TODO.method());
+		if (finnes(innlegg)) {
+			Innlegg[] ny = new Innlegg[innleggtabell.length-1];
+			
+			for (int i = 0, k = 0; i < innleggtabell.length; i++) {
+				if(!innleggtabell[i].erLik(innlegg)) {
+					ny[k++] = innleggtabell[i];
+				}
+			}
+			
+			innleggtabell = ny;
+			slettet = true;
+		}
+		return slettet;
 	}
+	
 	
 	public int[] search(String keyword) {
+		int[] id = new int[innleggtabell.length];
+		int index = 0;
+		for (Innlegg i : innleggtabell) {
+			if (i.toString().contains(keyword)) {
+				id[index++] = i.getId();
+			}
+		}
 		
-		throw new UnsupportedOperationException(TODO.method());
-
+		int[] nyId = new int[index+1];
+		for (int i = 0; i < nyId.length; i++) {
+			nyId[i] = id[i];
+		}
+		return nyId;
 	}
 }

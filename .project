@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>dat100-jplab12-testing</name>
+			<type>2</type>
+			<location>C:/Hvl/Eclipse/DAT100/dat100-jplab12-testing</location>
+		</link>
+	</linkedResources>
 </projectDescription>
