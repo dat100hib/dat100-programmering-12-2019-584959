@@ -64,6 +64,12 @@ public abstract class Innlegg {
 
 		return id;
 	}
+	
+	
+	public void setId(int id) {
+		
+		this.id = id;
+	}
 
 	
 	public int getLikes() {
@@ -91,15 +97,16 @@ public abstract class Innlegg {
 	public String toString() {
 		//"1\nOle Olsen\n23-10-2019\n7\n"
 		
-		return getId() + "\n" + getBruker() + "\n" + getDato() + "\n" + getLikes() + "\n";
+		return ""+getId() + "\n" + getBruker() + "\n" + getDato() + "\n" + getLikes() + "\n";
 		
 	}
 	
 	
 	// Metoden nedenfor er kun for valgfri oppgave 6
 	public String toHTML() {
-		
-		throw new UnsupportedOperationException(TODO.method());
+		String utString = "<h2>" + getBruker() + "@" + getDato() + "[" + getLikes() + "]" + "</h2>" + "\n"
+						+ "<hr>" + "\n";
+		return utString;
 				
 	}
 }

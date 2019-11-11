@@ -46,8 +46,8 @@ public class Tekst extends Innlegg {
 	
 	// Metoden nedenfor er kun for valgfri oppgave 6
 	public String toHTML() {
-			
-		throw new UnsupportedOperationException(TODO.method());
-				
+		String[] innlegg = super.toHTML().split("\n");
+		String utString = innlegg[0] + "\n" + "<p>" + getTekst() + "</p>" + innlegg[1] + "\n";
+		return utString;
 	}
 }
